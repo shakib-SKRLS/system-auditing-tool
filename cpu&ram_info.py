@@ -12,8 +12,8 @@ def get_cpu_info():
     cpu_info["cpu_per_core"] = psutil.cpu_percent(interval=1, percpu=True)
 
     freq = psutil.cpu_freq()
-    cpu_info["current_frequency_mhz"] = freq.current
-    cpu_info["max_frequency_mhz"] = freq.max
+    cpu_info["current_frequency_mhz"] = freq.current if freq else None
+    cpu_info["max_frequency_mhz"] = freq.max if freq else None
 
     return cpu_info
 

@@ -1,5 +1,6 @@
 import platform
 import subprocess
+import re
 from tabulate import tabulate
 
 dangerous_ports = ["21", "22", "23", "3389", "445"]
@@ -34,7 +35,7 @@ def linux_firewall_audit():
 
     # 3. Open Ports Check
     open_ports = run_command("ss -tuln")
-    risky_ports = [p for p in dangerous_ports if p in open_ports]
+    risky_ports = [p for p in dangerous_ports if re.search(rf":{p}(\s|$)", open_ports)]
 
     if risky_ports:
         findings.append(("Dangerous Open Ports", ", ".join(risky_ports), "FAIL"))
